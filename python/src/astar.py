@@ -233,18 +233,29 @@ def core_h_heuristic(node, net):
 ''' Find the best neighbor from a given list.
 Function implements simple tie-break selecting first node
 with smallest Cost and next with smallest Heuristic
+
+[!][]Implement an effitient search algorithm for below WHILE loop
+    [!][]Implement an effitient sort algorithm for list_open
+
 Input: list to search
 Output: the best node '''
 def core_next_best(list_open,net):
-    winner = list_open[0]
-    for node in list_open[1:]:
-        if( net.grid[node].fc < net.grid[winner].fc ):
+
+    list_index = len(list_open) - 1
+
+    winner = net.grid[list_open[list_index]]
+    while(list_index > 0):
+        list_index -= 1
+        node = net.grid[list_open[list_index]]
+
+        if( node.fc < winner.fc ):
             winner = node
-        elif( net.grid[node].fc == net.grid[winner].fc ):
-            if( net.grid[node].fh < net.grid[winner].fh ):
+        if( node.fc == winner.fc ):
+            if( node.fh < node.fh ):
                 winner = node
-    
-    return winner
+        
+    return winner.hash
+
 
 ''' The A-star algorithm '''
 def core_get_path(net):
@@ -256,7 +267,6 @@ def core_get_path(net):
 
     while( curr_node != net.goal ):
         #print("Current Node :"+str(curr_node)+" PARENT="+str(net.grid[curr_node].parent)+", neighbours:"+ str(net.grid[curr_node].edges))
-
         list_open.remove(curr_node)
         list_closed.append(curr_node)
 
@@ -276,7 +286,7 @@ def core_get_path(net):
             net.grid[neighbor].fg = tmp_fg
             net.grid[neighbor].fc = net.grid[neighbor].fg + (core_w_factor(neighbor,net) * net.grid[neighbor].fh)
             
-            list_open.insert(0,neighbor)
+            list_open.append(neighbor)
         
         if( 0 == len(list_open) ):
             break    
