@@ -1,0 +1,51 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile A star",
+            "type": "shell",
+            "command": "gcc",
+            "options": {
+                "cwd": "${workspaceRoot}/c/build"
+            },
+            "args": [
+                "-c",
+                "--std=c11",
+                "-Wall",
+                "-pedantic",
+                "${file}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }            
+        },
+
+        {
+            "label": "Python:Compile Astar",
+            "type": "shell",
+            "command": "C:/Python36-32/python.exe",
+            "options": {
+                "cwd": "${workspaceRoot}/python"
+            },
+            "args": [
+                // "${file}",
+                "src/astar.py",
+                "--map ../maps/2.txt"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+
+    ]
+}
