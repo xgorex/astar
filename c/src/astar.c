@@ -113,7 +113,7 @@ char grid_pulldata(struct _net *grid, char *filename){
 
 char grid_construct(struct _net *grid){
 
-
+    
 
     return 1;
 }
